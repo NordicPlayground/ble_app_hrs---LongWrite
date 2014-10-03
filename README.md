@@ -6,7 +6,7 @@ We can declare a characteristics with longer size than 20 bytes. Read and write 
 
 The example based on the ble_app_hrs from SDK v6.1.
 The Heart Rate Measurement characteristic to have longer size (QUEUED_WRITE_BUFFER_SIZE = 350), write and read properties added.
-
+BLE_EVT_USER_MEM_REQUEST and BLE_EVT_USER_MEM_RELEASE events are handled. 
 Can be tested with the Master Control Panel on PC or Android. 
 Requirements
 ------------
