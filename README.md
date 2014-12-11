@@ -5,9 +5,15 @@ Example on long write (long characteristic)
 We can declare a characteristics with longer size than 20 bytes. Read and write more than 20 bytes would requires long write/read supported. 
 
 The example based on the ble_app_hrs from SDK v6.1.
-The Heart Rate Measurement characteristic to have longer size (QUEUED_WRITE_BUFFER_SIZE = 350), write and read properties added.
+
+The Heart Rate Measurement characteristic have longer size (QUEUED_WRITE_BUFFER_SIZE = 350), 
+
+Write and read properties added to this characteristics.
+
 BLE_EVT_USER_MEM_REQUEST and BLE_EVT_USER_MEM_RELEASE events are handled. 
+
 Can be tested with the Master Control Panel on PC or Android. 
+
 Requirements
 ------------
 - nRF51 SDK version 6.0+
