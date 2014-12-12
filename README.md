@@ -22,7 +22,7 @@ Requirements
 
 The project may need modifications to work with other versions or other boards. 
 
-To compile it, clone the repository in the \nrf51822\Board\nrf6310\device_firmware_updates folder.
+To compile it, clone the repository in the \nrf51822\Board\nrf6310\s110\ folder.
 
 About this project
 ------------------
