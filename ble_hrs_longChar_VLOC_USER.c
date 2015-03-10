@@ -216,9 +216,6 @@ static uint32_t heart_rate_measurement_char_add(ble_hrs_t            * p_hrs,
     memset(&char_md, 0, sizeof(char_md));
 
     char_md.char_props.notify = 1;
-	  char_md.char_props.read = 1;
-	  char_md.char_props.write = 1;
-	
     char_md.p_char_user_desc  = NULL;
     char_md.p_char_pf         = NULL;
     char_md.p_user_desc_md    = NULL;

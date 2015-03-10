@@ -45,7 +45,7 @@
 #include "ble_debug_assert_handler.h"
 #include "pstorage.h"
 #include "app_trace.h"
-#include "simple_uart.h"
+
 #define IS_SRVC_CHANGED_CHARACT_PRESENT     0                                           /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
 #define WAKEUP_BUTTON_PIN                    BUTTON_0                                   /**< Button used to wake up the application. */
@@ -101,7 +101,7 @@
 #define DEAD_BEEF                            0xDEADBEEF                                 /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
 static uint8_t queued_write_buffer[QUEUED_WRITE_BUFFER_SIZE];
-static ble_user_mem_block_t mem_block;
+
 static uint16_t                              m_conn_handle = BLE_CONN_HANDLE_INVALID;   /**< Handle of the current connection. */
 static ble_gap_adv_params_t                  m_adv_params;                              /**< Parameters to be passed to the stack when starting advertising. */
 static ble_bas_t                             m_bas;                                     /**< Structure used to identify the battery service. */
@@ -685,7 +685,7 @@ static void conn_params_init(void)
 static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
     uint32_t err_code;
-
+		ble_user_mem_block_t mem_block;
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
@@ -714,23 +714,18 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             break;
 				case BLE_EVT_USER_MEM_REQUEST:
             
-          
+        
             mem_block.len = QUEUED_WRITE_BUFFER_SIZE;
             mem_block.p_mem = &queued_write_buffer[0];
             err_code = sd_ble_user_mem_reply(m_conn_handle, &mem_block);
-						//simple_uart_putstring("User mem request \r\n");
             break;
         
         case BLE_EVT_USER_MEM_RELEASE:
-						
-            if ((p_ble_evt->evt.common_evt.params.user_mem_release.mem_block.p_mem == mem_block.p_mem)&&(p_ble_evt->evt.common_evt.params.user_mem_release.mem_block.len == mem_block.len))
+            if (&p_ble_evt->evt.common_evt.params.user_mem_release.mem_block == &mem_block)
             {
                 //memory released do nothing. 
-								//simple_uart_putstring("User mem released \r\n");
             }
-						break;
-				case BLE_GATTS_EVT_WRITE:
-								//simple_uart_putstring("Evt Write \r\n");
+
             break;
         default:
             // No implementation needed.
@@ -914,8 +909,7 @@ int main(void)
     services_init();
     sensor_sim_init();
     conn_params_init();
-		//simple_uart_config(31,9,31,31,false);
-		//simple_uart_putstring("Starting...");
+
     // Start execution.
 		//Turn off HRM update
     //application_timers_start();
